@@ -1,6 +1,6 @@
 package Queue;
 
-public interface InterfaceFila <T> {
+public interface InterfaceQueue <T> {
 	void add(T element) throws Exception;
 	T remove() throws Exception;
 	T peek() throws Exception; //consulta o início (primeiro elemento)
