@@ -1,29 +1,29 @@
 package Queue;
 
-public class Fila<T> implements InterfaceFila<T>{
-	private int inicio;
-	private int fim;
+public class Queue<T> implements InterfaceQueue<T>{
+	private int start;
+	private int end;
 	private int size;
-	private T valor;
-	private T[] fila;
+	private T value;
+	private T[] queue;
 	
 	@SuppressWarnings("unchecked")
-	public Fila(int size) {
-		this.inicio = -1;
-		this.fim = -1;
-		this.fila = (T[]) new Object[size];
+	public Queue(int size) {
+		this.start = -1;
+		this.end = -1;
+		this.queue = (T[]) new Object[size];
 	}
 	
 	@Override
 	public void add(T element) throws Exception {
 		if(isFull()) {
-			throw new Exception("A fila está cheia");
+			throw new Exception("The queue is full");
 		}
 		else {
-			this.fim = (fim + 1) % size;
-			fila[fim] = element;
-			if(inicio == -1) {
-				inicio = 0;
+			this.end = (end + 1) % size;
+			queue[end] = element;
+			if(start == -1) {
+				start = 0;
 			}
 		}
 	}
@@ -31,50 +31,50 @@ public class Fila<T> implements InterfaceFila<T>{
 	@Override
 	public T remove() throws Exception {
 		if(!isEmpty()){
-			if(this.inicio == this.fim) {
-				valor = this.fila[this.inicio];
-				this.inicio = -1;
-				this.fim = -1;
-				return valor;
+			if(this.start == this.end) {
+				value = this.queue[this.start];
+				this.start = -1;
+				this.end = -1;
+				return value;
 			}
 			else {
-				valor = this.fila[inicio];
-				this.inicio++;
-				return valor;
+				value = this.queue[start];
+				this.start++;
+				return value;
 			}
 		}
 		else
-			throw new Exception("A fila está vazia");
+			throw new Exception("The queue is empty");
 	}
 
 	@Override
 	public T peek() throws Exception {
 		if(!isEmpty())
-			return this.fila[this.inicio];
+			return this.queue[this.start];
 		else
-			throw new Exception("A fila não contém elementos");
+			throw new Exception("The queue does not contain elements");
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return this.inicio == -1;
+		return this.start == -1;
 	}
 
 	@Override
 	public boolean isFull() {
-		int ultimoElemento = (this.fim + 1) % size;
-		return ultimoElemento == inicio;
+		int lastElement = (this.end + 1) % size;
+		return lastElement == start;
 	}
 
 	@Override
 	public void show() {
 		if(!isEmpty()) {
-			for(int i = inicio; i <= fim; i++) {
-				System.out.print(fila[i] + " ");
+			for(int i = start; i <= end; i++) {
+				System.out.print(queue[i] + " ");
 			}
 		}
 		else {
-			System.out.println("A fila está vazia");
+			System.out.println("The queue is empty");
 		}
 		System.out.println();
 	}
