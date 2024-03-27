@@ -1,6 +1,7 @@
 import java.awt.GridBagLayout;
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +25,9 @@ public class Main {
 		label.setText("Hi");
 
 		panel.add(label);
+
+		JLabel allCards = new JLabel(new ImageIcon("assets/images/cards.png"));
+		panel.add(allCards);
 
 		DraggableComponent drag = new DraggableComponent();
 		frame.add(drag);
