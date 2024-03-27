@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import components.DraggableComponent;
+
 public class Main {
 	public static void main(String[] args) {
 		final Color bgColor = new Color(20, 179, 51);
@@ -22,7 +24,10 @@ public class Main {
 		label.setText("Hi");
 
 		panel.add(label);
-		
+
+		DraggableComponent drag = new DraggableComponent();
+		frame.add(drag);
+
 		frame.add(panel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
