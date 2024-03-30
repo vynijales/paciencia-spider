@@ -13,8 +13,23 @@ public class Card {
 		this.suit = suit;
 		this.faceUp = false;
 
-		this.sprite = new SpriteSheet("../assets/images/cards-sheet.png", 13, 5);
-		this.sprite.setCell(1, 4);
+		this.sprite = new SpriteSheet("assets/images/cards.png", 13, 5);
+
+		int row;
+		int col = (this.value - 1) % 13;
+
+		if (suit.equals("clubs")) {
+			row = 0;
+		} else if (suit.equals("hearts")) {
+			row = 1;
+		} else if (suit.equals("spades")) {
+			row = 2;
+		} else if (suit.equals("diamonds")) {
+			row = 3;
+		} else {
+			row = 4;
+		}
+		this.sprite.setCell(col, row);
 	}
 	
 	public void setPosition(int x, int y) {
