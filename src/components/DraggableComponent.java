@@ -1,16 +1,16 @@
 package components;
 
-import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
+import javax.swing.SwingUtilities;
 
 public class DraggableComponent extends JComponent {
 
@@ -18,16 +18,35 @@ public class DraggableComponent extends JComponent {
 	private volatile int screenY = 0;
 	private volatile int myX = 0;
 	private volatile int myY = 0;
+	private volatile int myZ;
 	private Card card;
+	private DropZone dropZone;
 
-	public DraggableComponent() {
+	public DraggableComponent(DropZone dropZone) {
 		setBounds(0, 0, 60, 92);
 		setOpaque(false);
+
+		this.dropZone = dropZone;
 
 		card = new Card(1, "hearts");
 		card.setPosition(0, 0);
 
 		addMouseListener(new MouseListener() {
+
+			// public boolean isContainedIn(Component c) {
+			// Point p = DraggableComponent.this.getLocationOnScreen();
+			// final int WIDTH = 60;
+			// final int HEIGHT = 92;
+			// final int MARGIN = 2;
+			// SwingUtilities.convertPointFromScreen(p, dropZone);
+			// Rectangle expandedDropZone = new Rectangle(-WIDTH + MARGIN, -HEIGHT + MARGIN,
+			// WIDTH * 2 - MARGIN,
+			// HEIGHT * 2 - MARGIN);
+			// if (expandedDropZone.contains(p)) {
+			// return true;
+			// }
+			// return false;
+			// }
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -35,9 +54,9 @@ public class DraggableComponent extends JComponent {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				card.flip();
+				// card.flip();
 				paintComponent(getGraphics());
-				
+
 				screenX = e.getXOnScreen();
 				screenY = e.getYOnScreen();
 
@@ -47,6 +66,10 @@ public class DraggableComponent extends JComponent {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				if (isContainedIn(DraggableComponent.this.dropZone)) {
+					Point newLocation = DraggableComponent.this.dropZone.getLocation();
+					DraggableComponent.this.setLocation(newLocation);
+				}
 			}
 
 			@Override
@@ -75,8 +98,26 @@ public class DraggableComponent extends JComponent {
 		});
 	}
 
+	public boolean isContainedIn(DropZone c) {
+		Point p = DraggableComponent.this.getLocationOnScreen();
+		final int WIDTH = 60;
+		final int HEIGHT = 92;
+		final int MARGIN = 2;
+		SwingUtilities.convertPointFromScreen(p, c);
+		Rectangle expandedDropZone = new Rectangle(-WIDTH + MARGIN, -HEIGHT + MARGIN, WIDTH * 2 - MARGIN,
+				HEIGHT * 2 - MARGIN);
+		if (expandedDropZone.contains(p)) {
+			return true;
+		}
+		return false;
+	}
+
+	public void setDropZone(DropZone dropZone) {
+		this.dropZone = dropZone;
+	}
+
 	public void paintComponent(Graphics g) {
-		card.draw((Graphics2D)g);
+		card.draw((Graphics2D) g);
 	}
 
 }

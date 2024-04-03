@@ -1,27 +1,21 @@
 package components;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import java.awt.event.MouseEvent;
+
 public class GamePanel extends JPanel {
-    private Card card;
+    private ArrayList<DropZone> dropZones;
 
     public GamePanel() {
-        this.card = new Card(1, "copas");
-        this.card.setPosition(20, 20);
+
     }
-    
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Graphics2D graphics2D = (Graphics2D) g;
-        // graphics2D.setColor(Color.WHITE);
-        
-        // card.draw(graphics2D);
 
-        // // graphics2D.dispose();
-        // g.dispose();
     }
 }
