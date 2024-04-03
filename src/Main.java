@@ -21,40 +21,30 @@ public class Main {
 		frame.setSize(800, 600);
 		frame.setResizable(false);
 
-		// JPanel panel = new JPanel();
-		// panel.setSize(600, 300);
-		// panel.setLayout(new GridBagLayout());
+		// JPanel gamePanel = new JPanel();
+		// gamePanel.setSize(600, 300);
+		// gamePanel.add();
+		// gamePanel.setLayout(new GridBagLayout());
 		// panel.setBackground(bgColor);
 
-		// JLabel label = new JLabel();
-		// label.setText("Hi");
-		// panel.add(label);
-
+		
 		// JLabel allCards = new JLabel(new ImageIcon("assets/images/cards.png"));
 		// panel.add(allCards);
-
+		
 		GamePanel gamePanel = new GamePanel();
-		gamePanel.setBackground(bgColor);
+		JLabel label = new JLabel();
+		label.setText("Hi");
+		gamePanel.add(label);
+		gamePanel.setLayout(null);
+		// gamePanel.setBackground(bgColor);
+		
+		DraggableComponent drag = new DraggableComponent();
+		gamePanel.add(drag);
+		
+		DraggableComponent drag2 = new DraggableComponent();
+		gamePanel.add(drag2);
+		
 		frame.add(gamePanel);
-
-		// DraggableComponent drag = new DraggableComponent();
-		// Graphics graphics = drag.getGraphics();
-		// BufferedImage image = null;
-		
-		// try {
-		// 	image = ImageIO.read(new File("../assets/images/cards.png"));
-		// } catch (Exception e) {
-		// 	System.out.println("Erro ao carregar imagem da carta. Error: "+ e.toString());
-		// }
-		
-		// if (image != null) {
-		// 	graphics.drawImage(image, 0, 0, drag);
-		// }
-
-		// frame.add(drag);
-
-
-		// frame.add(panel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

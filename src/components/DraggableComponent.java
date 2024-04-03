@@ -1,11 +1,15 @@
 package components;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 
 public class DraggableComponent extends JComponent {
@@ -14,12 +18,14 @@ public class DraggableComponent extends JComponent {
 	private volatile int screenY = 0;
 	private volatile int myX = 0;
 	private volatile int myY = 0;
+	private Card card;
 
 	public DraggableComponent() {
-		setBorder(new LineBorder(Color.BLUE, 3));
-		setBackground(Color.WHITE);
-		setBounds(0, 0, 66, 97);
+		setBounds(0, 0, 60, 92);
 		setOpaque(false);
+
+		card = new Card(1, "hearts");
+		card.setPosition(0, 0);
 
 		addMouseListener(new MouseListener() {
 
@@ -29,6 +35,9 @@ public class DraggableComponent extends JComponent {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				card.flip();
+				paintComponent(getGraphics());
+				
 				screenX = e.getXOnScreen();
 				screenY = e.getYOnScreen();
 
@@ -64,6 +73,10 @@ public class DraggableComponent extends JComponent {
 			}
 
 		});
+	}
+
+	public void paintComponent(Graphics g) {
+		card.draw((Graphics2D)g);
 	}
 
 }

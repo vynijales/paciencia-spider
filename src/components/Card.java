@@ -37,6 +37,11 @@ public class Card {
 	}
 
 	public void flip() {
+		if (!faceUp) {
+			this.sprite.setCell(1, 4);
+		} else {
+			this.sprite.setCell(0, 1);
+		}
 		this.faceUp = !this.faceUp;
 	}
 

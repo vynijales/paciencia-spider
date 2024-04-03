@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel{
+public class GamePanel extends JPanel {
     private Card card;
 
     public GamePanel() {
@@ -16,11 +16,12 @@ public class GamePanel extends JPanel{
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D graphics2D = (Graphics2D) g;
-        graphics2D.setColor(Color.WHITE);
+        // Graphics2D graphics2D = (Graphics2D) g;
+        // graphics2D.setColor(Color.WHITE);
         
-        card.draw(graphics2D);
+        // card.draw(graphics2D);
 
-        graphics2D.dispose();
+        // // graphics2D.dispose();
+        // g.dispose();
     }
 }
