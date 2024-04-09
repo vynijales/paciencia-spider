@@ -1,44 +1,31 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
-import components.DraggableComponent;
-import components.DropZone;
-import components.GameManager;
+import javax.swing.JFrame;
+
+import components.Card;
+import components.CardColumn;
 import components.GamePanel;
 
 public class Main {
 	public static void main(String[] args) {
-
 		JFrame frame = new JFrame("Paciencia Spider");
 		frame.setSize(800, 600);
 		frame.setResizable(false);
-
-		GameManager gameManager = new GameManager();
-
+		
 		GamePanel gamePanel = new GamePanel();
 		gamePanel.setLayout(null);
+		
+		// Create card columns
+		for (int i = 0; i < 7; i++) {
+			CardColumn cardColumn = new CardColumn();
+			cardColumn.setBounds(20 + i * 100, 20, 0, 0);
+			cardColumn.updateBounds();
 
-		DropZone dropZone = new DropZone();
-		DropZone dropZone2 = new DropZone();
-
-		DraggableComponent drag = new DraggableComponent(gameManager);
-		gamePanel.add(drag);
-
-		DraggableComponent drag2 = new DraggableComponent(gameManager, 1, "spades");
-		gamePanel.add(drag2);
-
-		// DraggableComponent drag2 = new DraggableComponent(dropZone);
-		// gamePanel.add(drag2);
-
-		dropZone.setBounds(100, 100, 60, 92);
-		dropZone2.setBounds(200, 100, 60, 92);
-
-		gamePanel.add(dropZone);
-		gameManager.addDropZone(dropZone);
-
-		gamePanel.add(dropZone2);
-		gameManager.addDropZone(dropZone2);
-
+			for (int j = 13; j > 0; j--) {
+				cardColumn.append(new Card(j,"hearts"));
+			}
+			gamePanel.add(cardColumn);
+		}
+	
 		frame.add(gamePanel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

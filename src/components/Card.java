@@ -2,11 +2,13 @@ package components;
 
 import java.awt.Graphics2D;
 
+import components.SpriteSheet;
+
 public class Card {
 	private int value;
 	private String suit;
 	private boolean faceUp;
-	private SpriteSheet sprite;
+	public SpriteSheet sprite;
 
 	public Card(int value, String suit) {
 		this.value = value;
@@ -14,7 +16,10 @@ public class Card {
 		this.faceUp = false;
 
 		this.sprite = new SpriteSheet("assets/images/cards.png", 13, 5);
+		this.setupSprite();
+	}
 
+	private void setupSprite() {
 		int row;
 		int col = (this.value - 1) % 13;
 
@@ -31,16 +36,28 @@ public class Card {
 		}
 		this.sprite.setCell(col, row);
 	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public String getSuit() {
+		return suit;
+	}
 	
 	public void setPosition(int x, int y) {
 		this.sprite.setPosition(x, y);
+	}
+
+	public boolean isFaceUp() {
+		return faceUp;
 	}
 
 	public void flip() {
 		if (!faceUp) {
 			this.sprite.setCell(1, 4);
 		} else {
-			this.sprite.setCell(0, 1);
+			this.setupSprite();
 		}
 		this.faceUp = !this.faceUp;
 	}
@@ -51,5 +68,9 @@ public class Card {
 
 	public void draw(Graphics2D graphics2d) {
 		sprite.draw(graphics2d);
+	}
+
+	public void draw(Graphics2D graphics2d, int x, int y) {
+		sprite.draw(graphics2d, x, y);
 	}
 }

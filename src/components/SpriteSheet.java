@@ -45,6 +45,18 @@ public class SpriteSheet {
         h = image.getHeight() / rows; 
 	}
 
+    public void draw(Graphics2D graphics2d, int dst_x, int dst_y) {
+        int src_x = (cell % columns) * w;
+        int src_y = (cell / columns) * h;
+
+		graphics2d.drawImage(
+            image, 
+            dst_x, dst_y, dst_x + w, dst_y + h,
+            src_x, src_y, src_x + w, src_y + h,
+            null
+        );
+	}
+
     public void draw(Graphics2D graphics2d) {
         int src_x = (cell % columns) * w;
         int src_y = (cell / columns) * h;
