@@ -5,12 +5,19 @@ import java.awt.Graphics2D;
 import components.SpriteSheet;
 
 public class Card {
+	public enum SUIT {
+		CLUBS,
+		HEARTS,
+		SPADES,
+		DIAMONDS
+	};
+
 	private int value;
-	private String suit;
+	private SUIT suit;
 	private boolean faceUp;
 	public SpriteSheet sprite;
 
-	public Card(int value, String suit) {
+	public Card(int value, SUIT suit) {
 		this.value = value;
 		this.suit = suit;
 		this.faceUp = false;
@@ -23,13 +30,13 @@ public class Card {
 		int row;
 		int col = (this.value - 1) % 13;
 
-		if (suit.equals("clubs")) {
+		if (suit == SUIT.CLUBS) {
 			row = 0;
-		} else if (suit.equals("hearts")) {
+		} else if (suit == SUIT.HEARTS) {
 			row = 1;
-		} else if (suit.equals("spades")) {
+		} else if (suit == SUIT.SPADES) {
 			row = 2;
-		} else if (suit.equals("diamonds")) {
+		} else if (suit == SUIT.DIAMONDS) {
 			row = 3;
 		} else {
 			row = 4;
@@ -41,7 +48,7 @@ public class Card {
 		return value;
 	}
 
-	public String getSuit() {
+	public SUIT getSuit() {
 		return suit;
 	}
 	

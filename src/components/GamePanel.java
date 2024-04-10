@@ -1,6 +1,6 @@
 package components;
 
-import java.util.List;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -9,7 +9,8 @@ import controller.CardColumn;
 
 public class GamePanel extends JPanel {
     public GameController gameController;
-    
+    private Random rnd = new Random();
+
     public GamePanel() {
         gameController = new GameController();
         CardColumn[] columns = gameController.getColumns();
@@ -22,7 +23,8 @@ public class GamePanel extends JPanel {
 			columnComponent.updateBounds();
 
 			for (int j = 13; j > i + 2; j--) {
-				columnComponent.append(new Card(j,"hearts"));
+                Card.SUIT suit = Card.SUIT.values()[rnd.nextInt(4)];
+				columnComponent.append(new Card(j, suit));
 			}
             
 	        add(columnComponent);
