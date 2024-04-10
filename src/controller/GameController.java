@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 
 import java.util.List;
 import components.Card;
-import components.DeckComponent;
 
 public class GameController {
     public enum Mode {
@@ -25,7 +24,7 @@ public class GameController {
     private int selectedCard = -1;
     private int targetColumn = -1;
     private Card deckCard = null;
-
+    
     private Mode mode = Mode.SELECT;
     private CardColumn[] columns;
 
@@ -99,7 +98,6 @@ public class GameController {
         mode = Mode.SELECT_TARGET;
     }
 
-
     public void setDeckCard(Card card) {
         System.out.println("Deck selected2: " + card);
         this.deckCard = card;
@@ -110,18 +108,13 @@ public class GameController {
             System.out.println("CardColumn: " + column);
             return;
         }
-        System.out.println("Colocando na coluna: " + deckCard);
         Card card = column.getCard(column.size() - 1);
 
         int isRed1 = card.getSuit().ordinal() % 2;
         int isRed2 = deckCard.getSuit().ordinal() % 2;
 
-    
         if (isRed1 != isRed2 && card.getValue() == deckCard.getValue() + 1 ){
-            System.out.println("Colocando de verdade na coluna: " + deckCard);
-
             column.append(deckCard);
-
             mode = Mode.SELECT;
         }
     }
@@ -141,7 +134,6 @@ public class GameController {
                 e.printStackTrace();
             }
         } else {
-            // System.out.println("Arquivo não encontrado: " + file_path);
             writeHighScore(valor);
         }
         return valor;

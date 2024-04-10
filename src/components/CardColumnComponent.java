@@ -43,9 +43,9 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
             System.out.println("Colocando carta na coluna ");
             controller.pullDeck(column);
             controller.setMode(GameController.Mode.SELECT);
-
+            updateBounds();
         }
-        paintComponent(getGraphics());
+        repaint();
     }
 
     @Override
@@ -101,6 +101,7 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
     private void selectTarget() {
         column.selectTarget();
         updateBounds();
+        repaint();
     }
 
     public void updateBounds() {
