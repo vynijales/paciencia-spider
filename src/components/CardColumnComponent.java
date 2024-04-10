@@ -95,7 +95,7 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
     }
 
     private void selectTarget() {
-        controller.setTarget(column);
+        column.selectTarget();
         updateBounds();
     }
 

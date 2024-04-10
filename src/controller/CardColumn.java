@@ -15,7 +15,6 @@ public class CardColumn {
     public CardColumn(int column, GameController controller) {
         this.controller = controller;
         this.column = column;
-
         cards = new ArrayList<Card>();
     }
     
@@ -25,6 +24,14 @@ public class CardColumn {
 
     public List<Card> getCards() {
         return cards;
+    }
+    
+    public int size() {
+        return cards.size();
+    }
+    
+    public Card getCard(int index) {
+        return cards.get(index);
     }
 
     public List<Card> split(int index) {
@@ -46,7 +53,7 @@ public class CardColumn {
         }
     }
 
-    private void selectTarget() {
+    public void selectTarget() {
         controller.setTarget(this);
     }
 

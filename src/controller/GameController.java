@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import components.Card;
 
@@ -32,29 +31,43 @@ public class GameController {
         return this.mode;
     }
 
-    public List<Card> getSelectedCards() {
-        return null;
-    }
-
-    public void setTarget(CardColumn column) {
-        List<Card> cards = column.getCards();
+    public void setTarget(CardColumn target) {
         CardColumn selected = columns[selectedColumn];
         
         List<Card> resto = selected.split(selected.getSelected());
 
-        Card first = resto.get(0);
-        Card last = cards.get(cards.size() - 1);
+        if (target.size() > 0) {
+            Card first = resto.get(0);
+            Card last = target.getCard(target.size() - 1);
 
-        int isRed1 = first.getSuit().ordinal() % 2;
-        int isRed2 = last.getSuit().ordinal() % 2;
+            int isRed1 = first.getSuit().ordinal() % 2;
+            int isRed2 = last.getSuit().ordinal() % 2;
 
-        if (isRed1 != isRed2 && last.getValue() == first.getValue() + 1) {
-            column.extend(resto);
-            mode = Mode.SELECT;
+            if (isRed1 != isRed2 && last.getValue() == first.getValue() + 1) {
+                if (selected.size() > 0) {
+                    Card lastSelected = selected.getCard(selected.size() - 1);                
+                    if (!lastSelected.isFaceUp()) {
+                        lastSelected.flip();
+                    }
+                }
+                
+                target.extend(resto);
+                mode = Mode.SELECT;
+            } else {
+                selected.extend(resto);
+                cancelSelection();
+            }
         } else {
-            selected.extend(resto);
-            cancelSelection();
+            if (selected.size() > 0) {
+                Card lastSelected = selected.getCard(selected.size() - 1);                
+                if (!lastSelected.isFaceUp()) {
+                    lastSelected.flip();
+                }
+            }
+            
+            target.extend(resto);
         }
+        
     }
 
     public void selectCard(int card, CardColumn column) {
