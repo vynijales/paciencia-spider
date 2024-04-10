@@ -1,5 +1,13 @@
 package controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.util.List;
 import components.Card;
 
@@ -9,6 +17,8 @@ public class GameController {
         SELECT_TARGET,
     };
 
+    private static final String file_path = "highscore.txt";
+    private int highscore;
     private int selectedColumn = -1;
     private int selectedCard = -1;
     private int targetColumn = -1;
@@ -17,6 +27,7 @@ public class GameController {
     private CardColumn[] columns;
 
     public GameController() {
+        highscore = readHighScore();
         columns = new CardColumn[7];
         for (int i = 0; i < 7; i++) {
             columns[i] = new CardColumn(i, this);
@@ -80,5 +91,29 @@ public class GameController {
         mode = Mode.SELECT;
         this.selectedCard = -1;
         this.selectedColumn = -1;
+    }
+
+    public int readHighScore() {
+        int valor = 0;
+        if (Files.exists(Paths.get(file_path))) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
+                valor = Integer.parseInt(br.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // System.out.println("Arquivo não encontrado: " + file_path);
+            writeHighScore(valor);
+        }
+        return valor;
+    }
+
+    public void writeHighScore(int valor) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file_path))) {
+            bw.write(String.valueOf(valor));
+            bw.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
