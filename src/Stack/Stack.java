@@ -26,6 +26,7 @@ public class Stack <T> implements InterfaceStack<T>{
         }
        
     }
+   
     @Override
     public T pop() throws Exception {
         if(isEmpty()){
@@ -33,6 +34,23 @@ public class Stack <T> implements InterfaceStack<T>{
         }
         else{
             T element = vector[top];
+            top -=1;
+            return element;
+        }
+    }
+
+    public T pop(int index) throws Exception {
+        if(isEmpty()){
+            throw new Exception("The stack is empty");
+        }
+        else{
+            T element = vector[index];
+
+            // Shifts vector
+            for (int i = index; i < top; i++) {
+                vector[i] = vector[i + 1];
+            }
+
             top -=1;
             return element;
         }
