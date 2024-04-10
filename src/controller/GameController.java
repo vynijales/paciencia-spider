@@ -41,9 +41,20 @@ public class GameController {
         CardColumn selected = columns[selectedColumn];
         
         List<Card> resto = selected.split(selected.getSelected());
-        column.extend(resto);
-        
-        mode = Mode.SELECT;
+
+        Card first = resto.get(0);
+        Card last = cards.get(cards.size() - 1);
+
+        int isRed1 = first.getSuit().ordinal() % 2;
+        int isRed2 = last.getSuit().ordinal() % 2;
+
+        if (isRed1 != isRed2 && last.getValue() == first.getValue() + 1) {
+            column.extend(resto);
+            mode = Mode.SELECT;
+        } else {
+            selected.extend(resto);
+            cancelSelection();
+        }
     }
 
     public void selectCard(int card, CardColumn column) {
