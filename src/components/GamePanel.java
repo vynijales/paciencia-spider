@@ -43,6 +43,12 @@ public class GamePanel extends JPanel {
 	        add(columnComponent);
         }
 
+        for (int i = 0; i < deck.size(); i++) {
+            int index = rnd.nextInt(deck.size());
+            Card card = deck.pop(index);
+            deck.push(card);
+        }
+
         DeckComponent deckComponent = new DeckComponent(gameController, deck);
         deckComponent.setBounds(10, 10, 60, 200);
         add(deckComponent);
