@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import components.Card;
@@ -15,7 +16,8 @@ public class CardColumn {
     public CardColumn(int column, GameController controller) {
         this.controller = controller;
         this.column = column;
-        cards = new ArrayList<Card>();
+        
+        cards = new LinkedList<Card>();
     }
     
     public int getColumn() {

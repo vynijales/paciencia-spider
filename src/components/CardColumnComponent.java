@@ -119,7 +119,9 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
     }
 
     public void paintComponent(Graphics g) {
-        g.clearRect(0, 0, getWidth(), getHeight());
+        super.paintComponent(g);
+        // g.clearRect(0, 0, getWidth(), getHeight());
+        
         Card card;
         int selected = column.getSelected();
         int hover = column.getHover();

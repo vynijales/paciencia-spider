@@ -1,14 +1,14 @@
 package components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -17,36 +17,22 @@ import controller.GameController.Mode;
 
 import Stack.Stack;
 
-public class DeckComponent extends JPanel implements MouseListener {
+public class DeckComponent extends JPanel implements MouseListener, FocusListener {
     private Stack<Card>cards;
     private int selected = -1;
     private SpriteSheet sprite;
     private GameController gameController; 
 
-    public void setupSprite() {
-        if (cards.size() > 0) {
-            Card card = cards.peek();
-            int row;
-            int col = (card.getValue() - 1) % 13;
 
-            if (card.getSuit() == Card.SUIT.CLUBS) {row = 0;} 
-            else if (card.getSuit() == Card.SUIT.HEARTS) {row = 1;}
-            else if (card.getSuit() == Card.SUIT.SPADES) {row = 2;}
-            else if (card.getSuit() == Card.SUIT.DIAMONDS) {row = 3;}
-            else {row = 4;}
-            this.sprite.setCell(col, row);
-        } else {
-            this.sprite.setCell(1, 4);
-        }
-        repaint();
-    }
+    public DeckComponent(GameController gameController, Stack<Card> cards) {
+        // setBorder(BorderFactory.createLineBorder(Color.blue));
 
-    public DeckComponent(GameController gameController, Stack cards) {
-        setBorder(BorderFactory.createLineBorder(Color.blue));
         this.gameController = gameController;
         this.cards = cards;
         this.sprite = new SpriteSheet("assets/images/cards.png", 13, 5);
         setupSprite();
+        setOpaque(false);
+
         JButton deckButton = new JButton();
         deckButton.setText("Deck");
 
@@ -71,11 +57,28 @@ public class DeckComponent extends JPanel implements MouseListener {
         addMouseListener(this);
     }
 
+    public void setupSprite() {
+        if (cards.size() > 0) {
+            Card card = cards.peek();
+            int row;
+            int col = (card.getValue() - 1) % 13;
+
+            if (card.getSuit() == Card.SUIT.CLUBS) {row = 0;} 
+            else if (card.getSuit() == Card.SUIT.HEARTS) {row = 1;}
+            else if (card.getSuit() == Card.SUIT.SPADES) {row = 2;}
+            else if (card.getSuit() == Card.SUIT.DIAMONDS) {row = 3;}
+            else {row = 4;}
+            this.sprite.setCell(col, row);
+        } else {
+            this.sprite.setCell(1, 4);
+        }
+        repaint();
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         sprite.draw((Graphics2D)g, 0, 100);
     }
-
 
     public int getSelected() {
         return selected;
@@ -100,12 +103,11 @@ public class DeckComponent extends JPanel implements MouseListener {
         System.out.println("Mouse Clicked: " + cards.get(selected));
         gameController.setMode(Mode.PULL_DECK);
         gameController.setDeckCard(lastcard);
-
-        
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        requestFocus();
     }
 
     @Override
@@ -118,5 +120,14 @@ public class DeckComponent extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        repaint();
+    }
+
+    @Override
+    public void focusGained(FocusEvent e) {
     }
 }
