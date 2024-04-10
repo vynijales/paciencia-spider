@@ -2,8 +2,6 @@ package components;
 
 import java.awt.Graphics2D;
 
-import components.SpriteSheet;
-
 public class Card {
 	public enum SUIT {
 		CLUBS,
@@ -20,9 +18,15 @@ public class Card {
 	public Card(int value, SUIT suit) {
 		this.value = value;
 		this.suit = suit;
-		this.faceUp = false;
+		this.faceUp = true;
 
 		this.sprite = new SpriteSheet("assets/images/cards.png", 13, 5);
+		this.setupSprite();
+	}
+
+	public void setCard(int value, SUIT suit) {
+		this.value = value;
+		this.suit = suit;
 		this.setupSprite();
 	}
 
@@ -61,12 +65,13 @@ public class Card {
 	}
 
 	public void flip() {
-		if (!faceUp) {
-			this.sprite.setCell(1, 4);
-		} else {
-			this.setupSprite();
-		}
 		this.faceUp = !this.faceUp;
+		
+		if (faceUp) {
+			this.setupSprite();
+		} else {
+			this.sprite.setCell(1, 4);
+		}
 	}
 
 	public String toString() {
