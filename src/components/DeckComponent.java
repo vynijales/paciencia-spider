@@ -1,11 +1,5 @@
 package components;
 
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,15 +7,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import controller.GameController;
+import controller.GameController.Mode;
+
+import Stack.Stack;
 
 public class DeckComponent extends JPanel implements MouseListener {
-    private List<Card> cards;
+    private Stack<Card>cards;
     private int selected = -1;
     private SpriteSheet sprite;
+    private GameController gameController; 
 
     public void setupSprite() {
         if (cards.size() > 0) {
-            Card card = cards.get(cards.size() - 1);
+            Card card = cards.peek();
             int row;
             int col = (card.getValue() - 1) % 13;
 
@@ -37,20 +42,25 @@ public class DeckComponent extends JPanel implements MouseListener {
         repaint();
     }
 
-    public DeckComponent(List<Card> cards) {
+    public DeckComponent(GameController gameController, Stack cards) {
         setBorder(BorderFactory.createLineBorder(Color.blue));
+        this.gameController = gameController;
         this.cards = cards;
         this.sprite = new SpriteSheet("assets/images/cards.png", 13, 5);
-        this.sprite.setCell(0, 0);
-
+        setupSprite();
         JButton deckButton = new JButton();
         deckButton.setText("Deck");
 
         deckButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Card lastcard = cards.get(cards.size() - 1);
-                cards.remove(cards.size() - 1);
-                cards.add(0, lastcard);
+                Card lastcard = (Card) cards.peek();
+                try {
+                    cards.pop();
+                } catch (Exception e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                cards.addFirst(lastcard);
                 setupSprite();
                 repaint();
             }
@@ -67,9 +77,31 @@ public class DeckComponent extends JPanel implements MouseListener {
         sprite.draw((Graphics2D)g, 0, 100);
     }
 
+
+    public int getSelected() {
+        return selected;
+    }
+
+    public Stack<Card> getCards() {
+        return cards;
+    }
+
+    public void setSelected(int selected) {
+        this.selected = selected;
+    }
+
+    public void setCards(Stack<Card> cards) {
+        this.cards = cards;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
+        Card lastcard = cards.peek();
         selected = cards.size() - 1;
+        System.out.println("Mouse Clicked: " + cards.get(selected));
+        gameController.setMode(Mode.PULL_DECK);
+        gameController.setDeckCard(lastcard);
+
         
     }
 

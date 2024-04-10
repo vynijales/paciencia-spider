@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import components.GamePanel;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		JFrame frame = new JFrame("Paciencia Spider");
 		frame.setSize(800, 600);
 		frame.setResizable(false);

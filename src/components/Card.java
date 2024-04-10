@@ -75,7 +75,7 @@ public class Card {
 	}
 
 	public String toString() {
-		return this.value + " of " + this.suit;
+		return getValue() + " of " + getSuit() + "s";
 	}
 
 	public void draw(Graphics2D graphics2d) {

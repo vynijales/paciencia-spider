@@ -39,6 +39,11 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
             selectCard();
         } else if (controller.getMode() == GameController.Mode.SELECT_TARGET) {
             selectTarget();
+        } else if (controller.getMode() == GameController.Mode.PULL_DECK) {
+            System.out.println("Colocando carta na coluna ");
+            controller.pullDeck(column);
+            controller.setMode(GameController.Mode.SELECT);
+
         }
         paintComponent(getGraphics());
     }

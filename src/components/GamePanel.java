@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
+import Stack.Stack;
 import controller.GameController;
 import controller.CardColumn;
 
@@ -13,15 +14,15 @@ public class GamePanel extends JPanel {
     public GameController gameController;
     private Random rnd = new Random();
 
-    public GamePanel() {
+    public GamePanel() throws Exception {
         gameController = new GameController();
         CardColumn[] columns = gameController.getColumns();
         
-        List<Card> deck = new ArrayList<Card>();
+        Stack<Card> deck = new Stack<Card>(13 * 4);
         
         for (int i = 0; i < 13 * 4; i++) {
             Card card = new Card(i % 13 + 1, Card.SUIT.values()[i / 13]);
-            deck.add(card);
+            deck.push(card);
         };
         
         for (int i = 0; i < columns.length; i++) {
@@ -32,7 +33,7 @@ public class GamePanel extends JPanel {
 			columnComponent.updateBounds();
 
 			for (int j = 0; j < i + 1; j++) {
-                Card card = deck.remove(rnd.nextInt(deck.size() - 1));
+                Card card = deck.pop();
                 
                 if (j < i) {
                     card.flip();
@@ -44,7 +45,7 @@ public class GamePanel extends JPanel {
 	        add(columnComponent);
         }
 
-        DeckComponent deckComponent = new DeckComponent(deck);
+        DeckComponent deckComponent = new DeckComponent(gameController, deck);
         deckComponent.setBounds(10, 10, 60, 200);
         add(deckComponent);
     }

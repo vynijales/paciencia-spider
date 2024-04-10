@@ -39,9 +39,10 @@ public class Stack <T> implements InterfaceStack<T>{
     }
 
     @Override
-    public T peek() throws Exception {
+    public T peek() {
         if(isEmpty()){
-            throw new Exception("The stack does not contain elements");
+            System.out.println("The stack is empty");
+            return null;
         }
         else{
             return vector[top];
@@ -80,7 +81,30 @@ public class Stack <T> implements InterfaceStack<T>{
     }
 
 
-    public int getSize() {
+    public void addFirst(T element) {
+        if(isFull()){
+            System.out.println("The stack is full");
+        }
+        else{
+            for(int i = top; i >= 0; i--){
+                vector[i+1] = vector[i];
+            }
+            top += 1;
+            vector[0] = element;
+        }
+    }
+
+    public int size() {
         return size;
+    }
+
+    public T get(int index) {
+        if(index < 0 || index > top){
+            System.out.println("Index out of bounds");
+            return null;
+        }
+        else{
+            return vector[index];
+        }
     }
 }
