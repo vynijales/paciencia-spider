@@ -10,13 +10,11 @@ public class CardColumn {
     private int hover = -1;
     private int selected = -1;
     private int column = -1;
-    // private CardColumnComponent component;
     private GameController controller;
 
     public CardColumn(int column, GameController controller) {
         this.controller = controller;
         this.column = column;
-        // this.component = component;
 
         cards = new ArrayList<Card>();
     }
@@ -54,12 +52,10 @@ public class CardColumn {
 
     public void append(Card card) {
         this.cards.add(card);
-        // updateBounds();
     }
 
     public void extend(List<Card> cards) {
         this.cards.addAll(cards);
-        // updateBounds();
     }
 
     public void setHover(int hover) {

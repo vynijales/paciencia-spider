@@ -16,17 +16,13 @@ import controller.GameController;
 import controller.CardColumn;
 
 public class CardColumnComponent extends JComponent implements MouseMotionListener, MouseListener, FocusListener {
-    // private List<Card> cards;
-    // private int hover = -1;
-    // private int selected = -1;
     private GameController controller;
     private CardColumn column;
 
     public CardColumnComponent(GameController controller, CardColumn column) {
         this.controller = controller;
         this.column = column;
-
-        // cards = new ArrayList<Card>();
+        
         updateBounds();
         setOpaque(false);
         
@@ -89,29 +85,12 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
 
     @Override
     public void focusLost(FocusEvent e) {
-        // selected = -1;
         column.setSelected(-1);
         printComponent(getGraphics());
     }
     
-    // private List<Card> split() {
-    //     // List<Card> a = column.getCards().subList(0, column.getHover());
-    //     // List<Card> b = column.getCards().subList(column.getHover(), column.getCards().size());
-    //     // cards = a;
-    //     return column.split();
-    //     // return b;
-    // }
 
     private void selectCard() {
-        // if (hover != -1) {
-        //     if (selected == hover) {
-        //         selected = -1;
-        //         controller.cancelSelection();
-        //     } else {
-        //         selected = hover;
-        //         controller.selectCard(selected, column);
-        //     }
-        // }
         column.selectCard();
     }
 
@@ -125,13 +104,11 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
     }
 
     public void append(Card card) {
-        // this.cards.add(card);
         column.append(card);
         updateBounds();
     }
 
     public void extend(List<Card> cards) {
-        // this.cards.addAll(cards);
         column.extend(cards);
         updateBounds();
     }
