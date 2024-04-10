@@ -22,10 +22,10 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
     public CardColumnComponent(GameController controller, CardColumn column) {
         this.controller = controller;
         this.column = column;
-        
+
         updateBounds();
         setOpaque(false);
-        
+
         addMouseListener(this);
         addMouseMotionListener(this);
         addFocusListener(this);
@@ -59,7 +59,7 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
     public void mouseExited(MouseEvent e) {
         // hover = -1;
         column.setHover(-1);
-        printComponent(getGraphics());
+        repaint();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
         if (column.getHover() >= column.getCards().size()) {
             column.setHover(column.getCards().size() - 1);
         }
-        printComponent(getGraphics());
+        repaint();
     }
 
     @Override
@@ -86,9 +86,8 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
     @Override
     public void focusLost(FocusEvent e) {
         column.setSelected(-1);
-        printComponent(getGraphics());
+        repaint();
     }
-    
 
     private void selectCard() {
         column.selectCard();
@@ -100,7 +99,7 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
     }
 
     public void updateBounds() {
-        setBounds(this.getX(), this.getY(), 60, 20 * (column.getCards().size() -1) + 92);
+        setBounds(this.getX(), this.getY(), 60, 20 * (column.getCards().size() - 1) + 92);
     }
 
     public void append(Card card) {
@@ -119,50 +118,48 @@ public class CardColumnComponent extends JComponent implements MouseMotionListen
         int selected = column.getSelected();
         int hover = column.getHover();
         List<Card> cards = column.getCards();
-        
+
         if (selected != -1) {
             for (int i = 0; i < selected; i++) {
                 card = cards.get(i);
-                card.draw((Graphics2D) g, 0, i*20);
+                card.draw((Graphics2D) g, 0, i * 20);
             }
 
             for (int i = selected; i < cards.size(); i++) {
                 card = cards.get(i);
-                card.draw((Graphics2D) g, 0, i*20);
-                
+                card.draw((Graphics2D) g, 0, i * 20);
+
                 g.setColor(new Color(0, 255, 0, 255));
-                g.drawRect(0, i*20, 59, 91);
+                g.drawRect(0, i * 20, 59, 91);
 
                 g.setColor(new Color(50, 255, 50, 70));
-                g.fillRect(0, i*20, 59, 91);
+                g.fillRect(0, i * 20, 59, 91);
             }
 
         } else if (hover != -1) {
             for (int i = 0; i < hover; i++) {
                 card = cards.get(i);
-                card.draw((Graphics2D) g, 0, i*20);
+                card.draw((Graphics2D) g, 0, i * 20);
             }
-
 
             card = cards.get(hover);
-            card.draw((Graphics2D) g, 0, hover*20);
+            card.draw((Graphics2D) g, 0, hover * 20);
 
             g.setColor(new Color(100, 100, 255, 50));
-            
-            g.fillRect(0, hover*20, 59, 91);
-    
+
+            g.fillRect(0, hover * 20, 59, 91);
+
             for (int i = hover + 1; i < cards.size(); i++) {
                 card = cards.get(i);
-                card.draw((Graphics2D) g, 0, i*20);
+                card.draw((Graphics2D) g, 0, i * 20);
             }
-
 
         } else {
             for (int i = 0; i < cards.size(); i++) {
                 card = cards.get(i);
-                card.draw((Graphics2D) g, 0, i*20);
+                card.draw((Graphics2D) g, 0, i * 20);
             }
         }
-        
-	}
+
+    }
 }
