@@ -9,21 +9,27 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
 import javax.swing.JComponent;
 
-import components.CardColumn;
+import components.CardColumnComponent;
+import controller.GameController;
+import controller.CardColumn;
 
-public class CardColumn extends JComponent implements MouseMotionListener, MouseListener, FocusListener {
-    private List<Card> cards;
-    private int hover = -1;
-    private int selected = -1;
+public class CardColumnComponent extends JComponent implements MouseMotionListener, MouseListener, FocusListener {
+    // private List<Card> cards;
+    // private int hover = -1;
+    // private int selected = -1;
+    private GameController controller;
+    private CardColumn column;
 
-    public CardColumn() {
-        cards = new ArrayList<Card>();
+    public CardColumnComponent(GameController controller, CardColumn column) {
+        this.controller = controller;
+        this.column = column;
+
+        // cards = new ArrayList<Card>();
         updateBounds();
         setOpaque(false);
-
+        
         addMouseListener(this);
         addMouseMotionListener(this);
         addFocusListener(this);
@@ -33,10 +39,10 @@ public class CardColumn extends JComponent implements MouseMotionListener, Mouse
     public void mouseClicked(MouseEvent e) {
         // cards.get(hover).flip();
         requestFocus();
-        if (selected == hover) {
-            selected = -1;
-        } else {
-            selected = hover;
+        if (controller.getMode() == GameController.Mode.SELECT) {
+            selectCard();
+        } else if (controller.getMode() == GameController.Mode.SELECT_TARGET) {
+            selectTarget();
         }
         paintComponent(getGraphics());
     }
@@ -55,7 +61,8 @@ public class CardColumn extends JComponent implements MouseMotionListener, Mouse
 
     @Override
     public void mouseExited(MouseEvent e) {
-        hover = -1;
+        // hover = -1;
+        column.setHover(-1);
         printComponent(getGraphics());
     }
 
@@ -68,10 +75,10 @@ public class CardColumn extends JComponent implements MouseMotionListener, Mouse
         int x = e.getX();
         int y = e.getY();
 
-        hover = y / 20;
-        
-        if (hover >= cards.size()) {
-            hover = cards.size() - 1;
+        column.setHover(y / 20);
+
+        if (column.getHover() >= column.getCards().size()) {
+            column.setHover(column.getCards().size() - 1);
         }
         printComponent(getGraphics());
     }
@@ -82,34 +89,59 @@ public class CardColumn extends JComponent implements MouseMotionListener, Mouse
 
     @Override
     public void focusLost(FocusEvent e) {
-        selected = -1;
+        // selected = -1;
+        column.setSelected(-1);
         printComponent(getGraphics());
     }
     
-    private List<Card> split() {
-        List<Card> a = cards.subList(0, hover);
-        List<Card> b = cards.subList(hover, cards.size());
-        cards = a;
-        return b;
+    // private List<Card> split() {
+    //     // List<Card> a = column.getCards().subList(0, column.getHover());
+    //     // List<Card> b = column.getCards().subList(column.getHover(), column.getCards().size());
+    //     // cards = a;
+    //     return column.split();
+    //     // return b;
+    // }
+
+    private void selectCard() {
+        // if (hover != -1) {
+        //     if (selected == hover) {
+        //         selected = -1;
+        //         controller.cancelSelection();
+        //     } else {
+        //         selected = hover;
+        //         controller.selectCard(selected, column);
+        //     }
+        // }
+        column.selectCard();
+    }
+
+    private void selectTarget() {
+        controller.setTarget(column);
+        updateBounds();
     }
 
     public void updateBounds() {
-        setBounds(this.getX(), this.getY(), 60, 20 * (cards.size() -1) + 92);
+        setBounds(this.getX(), this.getY(), 60, 20 * (column.getCards().size() -1) + 92);
     }
 
     public void append(Card card) {
-        this.cards.add(card);
+        // this.cards.add(card);
+        column.append(card);
         updateBounds();
     }
 
     public void extend(List<Card> cards) {
-        this.cards.addAll(cards);
+        // this.cards.addAll(cards);
+        column.extend(cards);
         updateBounds();
     }
 
     public void paintComponent(Graphics g) {
         g.clearRect(0, 0, getWidth(), getHeight());
         Card card;
+        int selected = column.getSelected();
+        int hover = column.getHover();
+        List<Card> cards = column.getCards();
         
         if (selected != -1) {
             for (int i = 0; i < selected; i++) {
