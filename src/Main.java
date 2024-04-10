@@ -20,7 +20,7 @@ public class Main {
 			cardColumn.setBounds(20 + i * 100, 20, 0, 0);
 			cardColumn.updateBounds();
 
-			for (int j = 13; j > 0; j--) {
+			for (int j = 13; j > i + 2; j--) {
 				cardColumn.append(new Card(j,"hearts"));
 			}
 			gamePanel.add(cardColumn);
