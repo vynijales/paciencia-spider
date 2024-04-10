@@ -1,4 +1,6 @@
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
 import components.GamePanel;
@@ -11,18 +13,7 @@ public class Main {
 		
 		GamePanel gamePanel = new GamePanel();
 		gamePanel.setLayout(null);
-		
-		// Create card columns
-		// for (int i = 0; i < 7; i++) {
-		// 	CardColumn cardColumn = new CardColumn(gamePanel.gameController, i);
-		// 	cardColumn.setBounds(20 + i * 100, 20, 0, 0);
-		// 	cardColumn.updateBounds();
-
-		// 	for (int j = 13; j > i + 2; j--) {
-		// 		cardColumn.append(new Card(j,"hearts"));
-		// 	}
-		// 	gamePanel.add(cardColumn);
-		// }
+		gamePanel.setBackground(new Color(56, 168, 50));
 	
 		frame.add(gamePanel);
 		frame.setVisible(true);
